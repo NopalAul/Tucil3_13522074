@@ -1,57 +1,54 @@
 import util.*;
+import util.Dictionary;
+
 import java.util.*;
 
 public class GreedyBestFirstSolver extends WordLadderSolver {
-    private PriorityQueue<Node> priorityQueue;
+    private PriorityQueue<Node> frontier;
 
+    // Constructor untuk GreedyBestFirstSolver
     public GreedyBestFirstSolver(Dictionary dictionary, String startWord, String endWord) {
         super(dictionary, startWord, endWord);
-        priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
     }
 
     @Override
     public List<String> solve() {
-        Set<String> visited = new HashSet<>();
-        List<String> path = new ArrayList<>();
-        
-        Node startNode = new Node(startWord, null, heuristic(startWord));
-        priorityQueue.offer(startNode);
+        // Priority queue untuk menyimpan node yang akan diekspan, diurutkan berdasarkan nilai fn
+        frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
+        // Set untuk melacak node yang sudah dikunjungi
+        Set<String> explored = new HashSet<>();
 
-        while (!priorityQueue.isEmpty()) {
-            Node current = priorityQueue.poll();
-            visited.add(current.getWord());
-            if (current.getWord().equals(endWord)) {
-                // Reconstruct the path
-                while (current != null) {
-                    path.add(0, current.getWord());
-                    current = current.getParent();
+        Node startNode = new Node(startWord, null, 0);
+        frontier.add(startNode);
+
+        while (!frontier.isEmpty()) {
+            Node currentNode = frontier.poll();
+            String currentWord = currentNode.getWord();
+
+            visitedNodes++;
+
+            // Jika node saat ini adalah node tujuan, pencarian selesai
+            if (currentWord.equals(endWord)) {
+                return reconstructPath(currentNode);
+            }
+
+            explored.add(currentWord);
+
+            // Generate tetangga dari kata saat ini
+            List<String> neighbors = generateNeighbors(currentWord);
+            for (String neighbor : neighbors) {
+                if (!explored.contains(neighbor)) {
+                    visitedNodes++;
+                    int fn = calculateH(neighbor); // skor f(n) adalah h(n) pada Greedy Best First Search
+                    Node neighborNode = new Node(neighbor, currentNode, fn);
+                    frontier.add(neighborNode);
                 }
-                return path;
             }
-            expandNode(current, visited);
         }
-        return null; // No path found
+
+        // Jika frontier kosong dan tidak ditemukan solusi, kembalikan list kosong
+        return new ArrayList<>();
     }
 
-    private void expandNode(Node node, Set<String> visited) {
-        List<String> neighbors = generateNeighbors(node.getWord());
-        for (String neighbor : neighbors) {
-            if (!visited.contains(neighbor)) {
-                int fn = heuristic(neighbor);
-                Node newNode = new Node(neighbor, node, fn);
-                priorityQueue.offer(newNode);
-            }
-        }
-    }
-
-    private int heuristic(String word) {
-        // Placeholder heuristic function, e.g., Hamming distance
-        int distance = 0;
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) != endWord.charAt(i)) {
-                distance++;
-            }
-        }
-        return distance;
-    }
+    
 }

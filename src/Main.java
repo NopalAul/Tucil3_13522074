@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Scanner;
 
+import util.Dictionary;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -15,16 +17,12 @@ public class Main {
         System.out.println("3. A*");
         int algorithmChoice = scanner.nextInt();
 
-        Dictionary dictionary = new Dictionary("src/util/dictionary.txt");
+        Dictionary dictionary = new Dictionary("src/util/Collins_Scrabble_Words_2019.txt");
 
         WordLadderSolver solver;
         switch (algorithmChoice) {
             case 1:
-                // solver = new UCSSolver(dictionary, startWord, endWord);
-                // print the printPriorityQueue method from UCSSolver
                 UCSSolver ucsSolver = new UCSSolver(dictionary, startWord, endWord);
-                // Print the priority queue before solving
-                // ucsSolver.printPriorityQueue();
                 solver = ucsSolver;
                 break;
             case 2:
@@ -35,14 +33,14 @@ public class Main {
                 break;
             default:
                 System.out.println("Invalid choice. Exiting...");
-                scanner.close(); // Close the scanner
+                scanner.close(); 
                 return;
         }
 
         long startTime = System.nanoTime();
         List<String> path = solver.solve();
         long endTime = System.nanoTime();
-        long executionTime = (endTime - startTime) / 1000000; // Convert to milliseconds
+        long executionTime = (endTime - startTime) / 1000000; // Convert ke milliseconds
 
         if (path != null) {
             System.out.println("Path:");
@@ -57,6 +55,6 @@ public class Main {
             System.out.println("No path found.");
         }
 
-        scanner.close(); // Close the scanner
+        scanner.close(); 
     }
 }

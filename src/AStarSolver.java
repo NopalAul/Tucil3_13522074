@@ -1,61 +1,54 @@
 import util.*;
+import util.Dictionary;
+
 import java.util.*;
 
 public class AStarSolver extends WordLadderSolver {
-    private PriorityQueue<Node> priorityQueue;
+    private PriorityQueue<Node> frontier;
 
+    // Constructor untuk AStarSolver
     public AStarSolver(Dictionary dictionary, String startWord, String endWord) {
         super(dictionary, startWord, endWord);
-        priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
     }
 
     @Override
     public List<String> solve() {
-        Set<String> visited = new HashSet<>();
-        List<String> path = new ArrayList<>();
-        
-        Node startNode = new Node(startWord, null, 0);
-        priorityQueue.offer(startNode);
+        // Priority queue untuk menyimpan node yang akan diekspan, diurutkan berdasarkan nilai fn
+        frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
+        // Set untuk melacak node yang sudah dikunjungi
+        Set<String> explored = new HashSet<>();
 
-        while (!priorityQueue.isEmpty()) {
-            Node current = priorityQueue.poll();
-            visited.add(current.getWord());
+        Node startNode = new Node(startWord, null, 0);
+        frontier.add(startNode);
+
+        while (!frontier.isEmpty()) {
+            Node currentNode = frontier.poll();
+            String currentWord = currentNode.getWord();
 
             visitedNodes++;
 
-            if (current.getWord().equals(endWord)) {
-                // Reconstruct the path
-                while (current != null) {
-                    path.add(0, current.getWord());
-                    current = current.getParent();
+            // Jika node saat ini adalah node tujuan, pencarian selesai
+            if (currentWord.equals(endWord)) {
+                return reconstructPath(currentNode);
+            }
+
+            explored.add(currentWord);
+
+            // Generate tetangga dari kata saat ini
+            List<String> neighbors = generateNeighbors(currentWord);
+            for (String neighbor : neighbors) {
+                if (!explored.contains(neighbor)) {
+                    visitedNodes++;
+                    int gn = calculateG(currentNode); 
+                    int hn = calculateH(neighbor);
+                    int fn = gn + hn; // skor f(n) adalah g(n) + h(n) pada A*
+                    Node neighborNode = new Node(neighbor, currentNode, fn);
+                    frontier.add(neighborNode);
                 }
-                return path;
             }
-            expandNode(current, visited);
         }
-        return null; // No path found
-    }
 
-    private void expandNode(Node node, Set<String> visited) {
-        List<String> neighbors = generateNeighbors(node.getWord());
-        for (String neighbor : neighbors) {
-            if (!visited.contains(neighbor)) {
-                visitedNodes++;
-                int fn = node.countCost() + 1 + heuristic(neighbor); // A* cost is depth + heuristic
-                Node newNode = new Node(neighbor, node, fn);
-                priorityQueue.offer(newNode);
-            }
-        }
-    }
-
-    private int heuristic(String word) {
-        // Placeholder heuristic function, e.g., Hamming distance
-        int distance = 0;
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) != endWord.charAt(i)) {
-                distance++;
-            }
-        }
-        return distance;
+        // Jika frontier kosong dan tidak ditemukan solusi, kembalikan list kosong
+        return new ArrayList<>();
     }
 }
