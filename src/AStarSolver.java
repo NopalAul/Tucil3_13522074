@@ -20,6 +20,9 @@ public class AStarSolver extends WordLadderSolver {
         while (!priorityQueue.isEmpty()) {
             Node current = priorityQueue.poll();
             visited.add(current.getWord());
+
+            visitedNodes++;
+
             if (current.getWord().equals(endWord)) {
                 // Reconstruct the path
                 while (current != null) {
@@ -37,6 +40,7 @@ public class AStarSolver extends WordLadderSolver {
         List<String> neighbors = generateNeighbors(node.getWord());
         for (String neighbor : neighbors) {
             if (!visited.contains(neighbor)) {
+                visitedNodes++;
                 int fn = node.countCost() + 1 + heuristic(neighbor); // A* cost is depth + heuristic
                 Node newNode = new Node(neighbor, node, fn);
                 priorityQueue.offer(newNode);

@@ -5,6 +5,7 @@ public abstract class WordLadderSolver {
     protected Dictionary dictionary;
     protected String startWord;
     protected String endWord;
+    protected int visitedNodes;
 
     public WordLadderSolver(Dictionary dictionary, String startWord, String endWord) {
         this.dictionary = dictionary;
@@ -29,6 +30,10 @@ public abstract class WordLadderSolver {
             wordArray[i] = originalChar;
         }
         return neighbors;
+    }  
+
+    public int getVisitedNodes() {
+        return visitedNodes;
     }
 
     public abstract List<String> solve();

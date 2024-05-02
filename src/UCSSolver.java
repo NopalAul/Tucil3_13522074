@@ -11,36 +11,41 @@ public class UCSSolver extends WordLadderSolver {
     @Override
     public List<String> solve() {
         // Priority queue for storing nodes to be expanded, ordered by path cost
-        PriorityQueue<Node> frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
-        // Map to keep track of the best known path cost for each node
-        Map<String, Integer> pathCostMap = new HashMap<>();
+        frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
+        // Set to keep track of visited nodes
+        Set<String> explored = new HashSet<>();
         
         // Add the start node to the frontier
         Node startNode = new Node(startWord, null, 0);
         frontier.add(startNode);
-        // Initialize the start node's path cost to 0
-        pathCostMap.put(startWord, 0);
+
+        printPriorityQueue();
 
         while (!frontier.isEmpty()) {
+            // printPriorityQueue();
+
             // Get the node with the lowest path cost
             Node currentNode = frontier.poll();
             String currentWord = currentNode.getWord();
-            int currentCost = currentNode.countCost();
 
+            visitedNodes++;
+            
             // If the current node is the goal node, reconstruct and return the path
             if (currentWord.equals(endWord)) {
                 return reconstructPath(currentNode);
             }
+            
+            // Add current node to explored set
+            explored.add(currentWord);
 
             // Generate neighbors of the current word
             List<String> neighbors = generateNeighbors(currentWord);
             for (String neighbor : neighbors) {
-                int newCost = currentCost + 1;
-                // If the neighbor is not in the path cost map or the new cost is better than the previous one
-                if (!pathCostMap.containsKey(neighbor) || newCost < pathCostMap.get(neighbor)) {
-                    Node neighborNode = new Node(neighbor, currentNode, newCost);
+                if (!explored.contains(neighbor)) {
+                    visitedNodes++;
+                    int newFn = currentNode.countCost() + 1; // Increment the path cost
+                    Node neighborNode = new Node(neighbor, currentNode, newFn);
                     frontier.add(neighborNode);
-                    pathCostMap.put(neighbor, newCost); // Update the path cost map
                 }
             }
         }
@@ -60,7 +65,7 @@ public class UCSSolver extends WordLadderSolver {
         return path;
     }
 
-    // printqueue method
+    // printPrioqueue method
     public void printPriorityQueue() {
         System.out.println("Priority Queue:");
         for (Node node : frontier) {

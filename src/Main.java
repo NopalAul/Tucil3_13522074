@@ -49,7 +49,9 @@ public class Main {
             for (String word : path) {
                 System.out.println(word);
             }
-            System.out.println("Number of visited nodes: " + path.size());
+            System.out.println();
+            System.out.println("Number of step: " + (path.size() - 1));
+            System.out.println("Number of visited nodes: " + solver.getVisitedNodes());
             System.out.println("Execution time: " + executionTime + " milliseconds");
         } else {
             System.out.println("No path found.");
