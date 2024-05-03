@@ -31,7 +31,7 @@ public class MainGUI extends JFrame {
         setLocationRelativeTo(null); 
         setResizable(false);
 
-        ImagePanel backgroundPanel = new ImagePanel("src/gui/background.png");
+        ImagePanel backgroundPanel = new ImagePanel("gui/background.png");
         backgroundPanel.setLayout(null);
 
         // FONT
@@ -150,7 +150,7 @@ public class MainGUI extends JFrame {
 
         int algorithmChoice = algorithmComboBox.getSelectedIndex() + 1;
 
-        Dictionary dictionary = new Dictionary("src/util/Collins_Scrabble_Words_2019.txt");
+        Dictionary dictionary = new Dictionary("util/Collins_Scrabble_Words_2019.txt");
 
         // Validasi kata awal dan akhir
         if (!dictionary.isWord(startWord) || !dictionary.isWord(endWord)) {

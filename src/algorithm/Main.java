@@ -18,7 +18,7 @@ public class Main {
         System.out.println("3. A*");
         int algorithmChoice = scanner.nextInt();
 
-        Dictionary dictionary = new Dictionary("src/util/Collins_Scrabble_Words_2019.txt");
+        Dictionary dictionary = new Dictionary("util/Collins_Scrabble_Words_2019.txt");
 
         WordLadderSolver solver;
         switch (algorithmChoice) {
