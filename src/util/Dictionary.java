@@ -19,7 +19,7 @@ public class Dictionary {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String word;
             while ((word = br.readLine()) != null) {
-                dictionary.add(word.toLowerCase());
+                dictionary.add(word.toUpperCase());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,6 +28,6 @@ public class Dictionary {
 
     // Method untuk mengecek apakah kata ada di dalam dictionary
     public boolean isWord(String word) {
-        return dictionary.contains(word.toLowerCase());
+        return dictionary.contains(word.toUpperCase());
     }
 }

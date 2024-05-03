@@ -8,9 +8,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter the start word:");
-        String startWord = scanner.nextLine().toLowerCase();
+        String startWord = scanner.nextLine().toUpperCase();
         System.out.println("Enter the end word:");
-        String endWord = scanner.nextLine().toLowerCase();
+        String endWord = scanner.nextLine().toUpperCase();
         System.out.println("Choose the algorithm:");
         System.out.println("1. UCS");
         System.out.println("2. Greedy Best First Search");

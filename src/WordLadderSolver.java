@@ -45,7 +45,7 @@ public abstract class WordLadderSolver {
         List<String> path = new ArrayList<>();
         Node currentNode = endNode;
         while (currentNode != null) {
-            path.add(0, currentNode.getWord()); // Add the word to the beginning of the path
+            path.add(0, currentNode.getWord().toUpperCase()); // Add the word to the beginning of the path
             currentNode = currentNode.getParent();
         }
         return path;
