@@ -9,7 +9,7 @@
 * [How to Use](#how-to-use)
 
 
-## World Ledeng: Implementasi Algoritma UCS, Greedy Best First Search, dan A*  <a href="jebir"></a>
+## Word Ledeng: Implementasi Algoritma UCS, Greedy Best First Search, dan A*  <a href="jebir"></a>
 >  Word ladder adalah salah satu permainan kata yang terkenal
  bagi seluruh kalangan. Pada permainan ini, pemain diberikan dua kata yang disebut sebagai start word dan end word. Untuk memenangkan permainan, pemain harus menemukan rantai kata yang dapat menghubungkan antara start word dan end word. Banyaknya huruf pada start word dan end word selalu sama. Tiap kata yang berdekatan dalam rantai kata tersebut hanya boleh berbeda satu huruf saja. Pada permainan ini,
  diharapkan solusi optimal, yaitu solusi yang meminimalka banyaknya kata yang dimasukkan pada rantai kata.
