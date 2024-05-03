@@ -1,6 +1,9 @@
-import util.*;
+package algorithm;
 import java.util.ArrayList;
 import java.util.List;
+
+import util.Dictionary;
+import util.Node;
 
 public abstract class WordLadderSolver {
     protected Dictionary dictionary;

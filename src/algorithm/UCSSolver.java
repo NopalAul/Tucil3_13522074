@@ -1,7 +1,8 @@
-import util.*;
-import util.Dictionary;
-
+package algorithm;
 import java.util.*;
+
+import util.Dictionary;
+import util.Node;
 
 public class UCSSolver extends WordLadderSolver {
     private PriorityQueue<Node> frontier;
@@ -13,6 +14,11 @@ public class UCSSolver extends WordLadderSolver {
 
     @Override
     public List<String> solve() {
+        // Jika kata bukan kata valid, kembalikan list berisi "Invalid"
+        if (!dictionary.isWord(startWord) || !dictionary.isWord(endWord)) {
+            return new ArrayList<>(Collections.singletonList("Invalid"));
+        }
+
         // Priority queue untuk menyimpan node yang akan diekspan, diurutkan berdasarkan nilai fn
         frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
         // Set untuk melacak node yang sudah dikunjungi

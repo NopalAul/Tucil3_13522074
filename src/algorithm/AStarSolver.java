@@ -1,18 +1,24 @@
-import util.*;
-import util.Dictionary;
-
+package algorithm;
 import java.util.*;
 
-public class GreedyBestFirstSolver extends WordLadderSolver {
+import util.Dictionary;
+import util.Node;
+
+public class AStarSolver extends WordLadderSolver {
     private PriorityQueue<Node> frontier;
 
-    // Constructor untuk GreedyBestFirstSolver
-    public GreedyBestFirstSolver(Dictionary dictionary, String startWord, String endWord) {
+    // Constructor untuk AStarSolver
+    public AStarSolver(Dictionary dictionary, String startWord, String endWord) {
         super(dictionary, startWord, endWord);
     }
 
     @Override
     public List<String> solve() {
+        // Jika kata bukan kata valid, kembalikan list berisi "Invalid"
+        if (!dictionary.isWord(startWord) || !dictionary.isWord(endWord)) {
+            return new ArrayList<>(Collections.singletonList("Invalid"));
+        }
+
         // Priority queue untuk menyimpan node yang akan diekspan, diurutkan berdasarkan nilai fn
         frontier = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
         // Set untuk melacak node yang sudah dikunjungi
@@ -39,7 +45,9 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
             for (String neighbor : neighbors) {
                 if (!explored.contains(neighbor)) {
                     visitedNodes++;
-                    int fn = calculateH(neighbor); // skor f(n) adalah h(n) pada Greedy Best First Search
+                    int gn = calculateG(currentNode); 
+                    int hn = calculateH(neighbor);
+                    int fn = gn + hn; // skor f(n) adalah g(n) + h(n) pada A*
                     Node neighborNode = new Node(neighbor, currentNode, fn);
                     frontier.add(neighborNode);
                 }
@@ -49,6 +57,4 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
         // Jika frontier kosong dan tidak ditemukan solusi, kembalikan list kosong
         return new ArrayList<>();
     }
-
-    
 }
