@@ -53,7 +53,5 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
 
         // Jika simpulHidup kosong dan tidak ditemukan solusi, kembalikan list kosong
         return new ArrayList<>();
-    }
-
-    
+    }   
 }

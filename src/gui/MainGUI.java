@@ -150,7 +150,7 @@ public class MainGUI extends JFrame {
 
         int algorithmChoice = algorithmComboBox.getSelectedIndex() + 1;
 
-        Dictionary dictionary = new Dictionary("util/Collins_Scrabble_Words_2019.txt");
+        Dictionary dictionary = new Dictionary("util/dictionaryOracle.txt");
 
         // Validasi kata awal dan akhir
         if (!dictionary.isWord(startWord) || !dictionary.isWord(endWord)) {
@@ -187,6 +187,9 @@ public class MainGUI extends JFrame {
 
         if (path != null) {
             if (path.isEmpty()) {
+                stepsLabel.setText("");
+                visitedNodesLabel.setText("" + solver.getVisitedNodes());
+                executionTimeLabel.setText("" + executionTime + " ms");
                 resultArea.setText("No path found.");
                 return;
             }
@@ -199,6 +202,9 @@ public class MainGUI extends JFrame {
             executionTimeLabel.setText("" + executionTime + " ms");
             resultArea.setText(result.toString());
         } else {
+            stepsLabel.setText("");
+            visitedNodesLabel.setText("");
+            executionTimeLabel.setText("");
             resultArea.setText("No path found.");
         }
     }
