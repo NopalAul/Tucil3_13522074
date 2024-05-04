@@ -1,6 +1,6 @@
 package util;
 
-public class Node implements Comparable<Node> {
+public class Node  {
     private String word;
     private Node parent;
     private int fn;
@@ -36,10 +36,4 @@ public class Node implements Comparable<Node> {
         }
         return cost;
     }
-
-    @Override
-    public int compareTo(Node other) {
-        return Integer.compare(this.fn, other.fn);
-    }
-
 }
