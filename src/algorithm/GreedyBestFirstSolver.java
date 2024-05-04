@@ -14,11 +14,6 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
 
     @Override
     public List<String> solve() {
-        // Jika kata bukan kata valid, kembalikan list berisi "Invalid"
-        if (!dictionary.isWord(startWord) || !dictionary.isWord(endWord)) {
-            return new ArrayList<>(Collections.singletonList("Invalid"));
-        }
-
         // Priority queue untuk menyimpan node yang akan diekspan, diurutkan berdasarkan nilai fn
         simpulHidup = new PriorityQueue<>(Comparator.comparingInt(Node::getFn));
         // Set untuk melacak node yang sudah dikunjungi
