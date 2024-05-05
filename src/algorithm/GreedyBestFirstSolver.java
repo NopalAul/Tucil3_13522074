@@ -23,6 +23,11 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
         simpulHidup.add(startNode);
 
         while (!simpulHidup.isEmpty()) {
+            // // print priority queue with their fn
+            // for (Node node : simpulHidup) {
+            //     System.out.println(node.getWord() + " " + node.getFn());
+            // }
+
             Node currentNode = simpulHidup.poll();
             String currentWord = currentNode.getWord();
 
@@ -36,6 +41,7 @@ public class GreedyBestFirstSolver extends WordLadderSolver {
             explored.add(currentWord);
 
             // Generate tetangga dari kata saat ini
+            simpulHidup.clear();
             List<String> neighbors = generateNeighbors(currentWord);
             for (String neighbor : neighbors) {
                 if (!explored.contains(neighbor)) {
